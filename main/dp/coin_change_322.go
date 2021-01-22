@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 import "sort"
 
 // https://leetcode.com/problems/coin-change/
@@ -40,8 +42,36 @@ func dp(memo []int, coins []int, amount int) int {
 	return re
 }
 
+// bottom up
+func coinChange2(coins []int, amount int) int {
+
+	memo := make([]int, amount + 1)
+	for i := 1; i < len(memo); i++ {
+		memo[i] = amount + 1
+	}
+	// sort to ascending order
+	sort.Ints(coins)
+	for i := 0; i < len(coins); i++ {
+		for j := coins[i]; j <= amount; j++ {
+			memo[j] = min(memo[j], 1 + memo[j - coins[i]])
+		}
+	}
+	if memo[amount] == amount + 1 {
+		return -1
+	}
+	return memo[amount]
+
+}
+
+func min(x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
 func main() {
 	nums := []int{1, 2, 5}
-	re := coinChange(nums, 14)
+	re := coinChange2(nums, 14)
 	fmt.Printf("the result = %v", re)
 }
