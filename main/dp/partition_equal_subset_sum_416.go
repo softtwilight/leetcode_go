@@ -5,7 +5,43 @@ import (
 )
 
 //https://leetcode.com/problems/partition-equal-subset-sum/
+
 func canPartition(nums []int) bool {
+	dp := make(map[int]bool)
+
+	targetSum := 0
+	for _, val:= range nums {
+		targetSum += val
+	}
+
+	if targetSum %2 !=0 {
+		return false
+	}
+
+	//sumSet := []int {}
+	return canPartitionHelper(targetSum/2, 0, nums, dp)
+}
+func canPartitionHelper( target int,  i int, nums[]int, memo map[int] bool) bool {
+	if val, ok := memo[target]; ok {
+		return val
+	}
+	if target == 0 {
+		return true
+	}
+	if i == len(nums){
+		return false
+	}
+	if nums[i] <= target {
+		if canPartitionHelper(target-nums[i], i+1, nums, memo) == true {
+			memo[target] = true
+			return true
+		}
+	}
+	memo[target] = canPartitionHelper(target, i+1, nums, memo)
+	return memo[target]
+}
+
+func canPartition2(nums []int) bool {
 	sum := 0
 	for _, v := range nums {
 		sum += v
@@ -54,5 +90,6 @@ func canPartition(nums []int) bool {
 //}
 
 func main() {
-	fmt.Println(canPartition([]int{2, 2, 1, 1}))
+	fmt.Println(canPartition([]int{1,2,3,4,5,6,7}))
+	fmt.Println(canPartition3([]int{1,2,3,4,5,6,7}))
 }
