@@ -5,6 +5,24 @@ import (
 )
 
 func maxProfit(prices []int) int {
+	pre, canBuy, cansell := 0, 0, -100000000
+	for _, p := range prices {
+		old := canBuy
+		canBuy = max(canBuy, cansell+p)
+		cansell = max(cansell, pre-p)
+		pre = old
+	}
+	return canBuy
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func maxProfit2(prices []int) int {
 	dp := make([]int, len(prices))
 	return maxProfitHelper(prices, 0, dp)
 }
