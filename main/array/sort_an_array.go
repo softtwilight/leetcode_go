@@ -41,5 +41,5 @@ func exchange(nums []int, i int, j int) {
 
 func main() {
 	nums := []int{5, 1, 1, 2, 0, 0, 3}
-	fmt.Printf("the result = %v", sortArray(nums))
+	fmt.Println(sortArray(nums))
 }
