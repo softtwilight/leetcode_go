@@ -3,7 +3,6 @@ package main
 import "fmt"
 
 func longestPalindromeSubseq(s string) int {
-
 	memo := make([][]int, len(s))
 	for i := range memo {
 		memo[i] = make([]int, len(s))
